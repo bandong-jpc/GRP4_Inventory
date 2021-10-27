@@ -5,6 +5,7 @@
 
 void filecheck();
 void update();
+void filecheck();
 
 int main()
 {
@@ -57,11 +58,15 @@ int main()
 }
 
 void update(){
-
+  //item variable to store read data
+  item temp;
   //check if file exists
   filecheck();
-
-  item x;
+  //dynamic array to store all of the file contents
+  DynamicArray list;
+  //initialize the array
+  initArray(&list, 1);
+  
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
   //line variable for reading line
@@ -69,7 +74,7 @@ void update(){
   //entries variable for storing number of entries
   int entries = 0;
   //variable for storing index of item to be updated
-  int pos = -1
+  int pos = -1;
 
   //loop through file reading every line
   while(!feof(fpointer)){
@@ -88,24 +93,24 @@ void update(){
       switch (i)
       {
       case 0:
-        strcpy(x.id, detail);
+        strcpy(temp.id, detail);
 
         break;
       
       case 1:
-        strcpy(x.description, detail);
+        strcpy(temp.description, detail);
         break;
       
       case 2:
-        x.qty = atoi(detail);
+        temp.qty = atoi(detail);
         break;
       
       case 3:
-        strcpy(x.exp, detail);
+        strcpy(temp.exp, detail);
         break;
       
       case 4:
-        x.price = atof(detail);
+        temp.price = atof(detail);
         break;
     
       default:
@@ -114,9 +119,20 @@ void update(){
       i++;
    }
 
+    insertArray(&list, temp);
+
     entries++;
   }
   fclose(fpointer);
+
+  for (int j = 0; j < entries; j++)
+  {
+    printf("\n%d\t%s", j, list.array[j].id);
+  }
+  
+
+  freeArray(&list);
+
 }
 
 
