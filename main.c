@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void filecheck();
+
 int main()
 {
   
@@ -51,4 +53,10 @@ int main()
 
 
   return 0;
+}
+
+void filecheck(){
+
+  
+
 }
