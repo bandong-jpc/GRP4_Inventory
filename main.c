@@ -57,22 +57,30 @@ int main()
 }
 
 void update(){
-  
+  //stores item details to a variable
   item x;
 
+  
+}
 
-  char id[255];
+//function for counting the number of entries in the file
+int entry_counter(){
+  item x;
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
+  //line variable for reading line
+  char line[255];
+  //entries variable for storing number of entries
+  int entries = 0;
 
-  fgets(id, 255, fpointer);
+  //check for how many entries in the file
+  while(!feof(fpointer)){
+    fgets(line, 255, fpointer); 
 
-  fclose(fpointer);
-
-    char detail[50];
-    int i = 0;
+  char detail[50];
+  int i = 0;
    // Extract the first token
-   char * token = strtok(id, ",\"");
+   char * token = strtok(detail, ",\"");
    // loop through the string to extract all other tokens
    while( token != NULL ) {
       
@@ -84,7 +92,7 @@ void update(){
       switch (i)
       {
       case 0:
-        x.id = atoi(detail);
+        strcpy(x.id, detail);
         break;
       
       case 1:
@@ -113,12 +121,6 @@ void update(){
       i++;
    }
 
-  /* printf( "\n%d", x.id ); //printing each token
-  printf( "\n%s", x.description ); //printing each token
-  printf( "\n%d", x.qty ); //printing each token
-  printf( "\n%s", x.exp ); //printing each token
-  printf( "\n%.2f", x.price ); //printing each token */
-  
 }
 
 void filecheck(){
@@ -153,9 +155,6 @@ int entry_counter(){
     fgets(line, 255, fpointer); 
 
     
-
-
-
     entries++;
   }
 
