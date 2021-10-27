@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void filecheck();
-
 int main()
 {
   
