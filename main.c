@@ -4,7 +4,6 @@
 #include "header.h"
 
 void update();
-int entry_counter();
 
 int main()
 {
@@ -57,14 +56,10 @@ int main()
 }
 
 void update(){
-  //stores item details to a variable
-  item x;
 
-  
-}
+  //check if file exists
+  filecheck();
 
-//function for counting the number of entries in the file
-int entry_counter(){
   item x;
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
@@ -72,8 +67,10 @@ int entry_counter(){
   char line[255];
   //entries variable for storing number of entries
   int entries = 0;
+  //variable for storing index of item to be updated
+  int pos = -1
 
-  //check for how many entries in the file
+  //loop through file reading every line
   while(!feof(fpointer)){
     fgets(line, 255, fpointer); 
 
@@ -83,16 +80,15 @@ int entry_counter(){
    char * token = strtok(detail, ",\"");
    // loop through the string to extract all other tokens
    while( token != NULL ) {
-      
       strcpy(detail, token);
      
       token = strtok(NULL, ",\"");
-
 
       switch (i)
       {
       case 0:
         strcpy(x.id, detail);
+
         break;
       
       case 1:
@@ -110,26 +106,18 @@ int entry_counter(){
       case 4:
         x.price = atof(detail);
         break;
-      
-
-      
+    
       default:
         break;
       }
-
-       
       i++;
    }
-
-
-
     entries++;
   }
-
   fclose(fpointer);
-
-  return entries;
 }
+
+
 
 void filecheck(){
   //open file to read
