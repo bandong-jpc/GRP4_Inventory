@@ -9,10 +9,7 @@ void add()
     	unsigned int qty;       //Item Quantity
     	char exp[10];           //Item Expiry Date
     	float price;           //Item price
-    	
-    	char year[4];
-    	char month[2];
-    	char date[2];
+    
     
 
     	if(!fp)
@@ -34,13 +31,8 @@ void add()
     scanf(" %u", &qty);
     printf("\n");
     fflush(stdin);
-    printf("Input Item Expiry Date in YYYY-MM-DD: \n");
-    printf("Year: ");
-    scanf(" %4s", &year);
-    printf("Month: ");
-    scanf(" %2s", &month);
-    printf("Date: ");
-    scanf(" %2s", &date);
+    printf("Input Item Expiry Date in YYYY-MM-DD:");
+	scanf(" %10s", &exp);
     printf("\n");
     fflush(stdin);
     printf("Input Item Price:");
@@ -49,7 +41,7 @@ void add()
     
 
 
-	fprintf(fp, "\"%s\",\"%s\",\"%u\",\"%s-%s-%s\",\"%5.2f\"\n", id, description, qty, year, month, date, price);
+	fprintf(fp, "\"%s\",\"%s\",\"%u\",\"%s\",\"%5.2f\"\n", id, description, qty, exp, price);
     printf(" .......... \n"); 
  	printf(" .......... \n"); 
     printf("Success! Inventory Item has been added!");
