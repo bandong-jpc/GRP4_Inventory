@@ -78,12 +78,12 @@ void add()
     
 	x = atoi(id);
 	
-	if(x >= 10000 && x <= 99999 && m <13 && d <32 && y >2000 && qty < 0 && price < 0)
+	if(x > 9999 && x < 100000 && m <13 && d <32 && y >2000 && qty > 0 && price > 0)
 	{	
 	fprintf(fp, "\"%s\",\"%s\",\"%u\",\"%d-%d-%d\",\"%5.2f\"\n", id, description, qty, y, m, d, price);
     printf("............ \n"); 
  	printf("............ \n"); 
-    printf("Success! Inventory Item has been added! \n" );
+    printf("Success! Inventory Item added! \n" );
     
     fclose(fp);	
 	}
