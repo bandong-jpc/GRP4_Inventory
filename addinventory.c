@@ -7,7 +7,7 @@ typedef struct {
     char description[41];   //Item Description
     unsigned int qty;       //Item Quantity
     char exp[10];           //Item Expiry Date
-    float price;           //Item price
+    float price;            //Item price
   } item;
   
 void filecheck()
@@ -33,16 +33,18 @@ void add()
      {
      	FILE *fp = fopen("Inventory.csv", "a+");
      	
-     	char id[6];             //Item ID
-    	char description[41];   //Item Description
-    	unsigned int qty;       //Item Quantity
-    	char exp[10];           //Item Expiry Date
-    	float price;           //Item price
-    	int x;
-    	int y;
-    	int m;
-    	int d;
-    
+     	char id[6];              //Item ID
+    	char description[41];    //Item Description
+    	unsigned int qty;        //Item Quantity
+		  char exp[10];            //Item Expiry Date
+    	float price;             //Item price
+    	int x;				           //Char converter to Int
+    	int y;                   //Format Year
+    	int m;                   //Format Month
+    	int d;                   //Format Date
+    	
+    	
+    	int R = qty;
     	if(!fp)
     	{
     	printf("Can't open file\n");
@@ -58,7 +60,7 @@ void add()
     printf("\n");
     fflush(stdin);
     printf("Input Item Quantity:");
-    scanf(" %u", &qty);
+    scanf(" %d", &R);
     printf("\n");
     fflush(stdin);
     printf("Input Item Expiry Date in YYYY-MM-DD\n");
@@ -70,7 +72,7 @@ void add()
     fflush(stdin);
     printf("Date: ");
     scanf(" %d", &d);
-	printf("\n");
+	  printf("\n");
     fflush(stdin);
     printf("Input Item Price:");
     scanf(" %f", &price);
@@ -78,9 +80,9 @@ void add()
     
 	x = atoi(id);
 	
-	if(x > 9999 && x < 100000 && m <13 && d <32 && y >2000 && qty > 0 && price > 0)
+	if(x > 9999 && x < 100000 && m <13 && d <32 && y >2000 && R > 0 && price > 0 )
 	{	
-	fprintf(fp, "\"%s\",\"%s\",\"%u\",\"%d-%d-%d\",\"%5.2f\"\n", id, description, qty, y, m, d, price);
+	fprintf(fp, "\"%s\",\"%s\",\"%d\",\"%d-%d-%d\",\"%5.2f\"\n", id, description, R, y, m, d, price);
     printf("............ \n"); 
  	printf("............ \n"); 
     printf("Success! Inventory Item added! \n" );
