@@ -13,13 +13,13 @@ typedef struct {
 void filecheck()
 {
   //open file to read
-  FILE *fpointer = fopen("Inventory.csv", "r+");
+  FILE *fpointer = fopen("C:inventoryText.csv", "r+");
 
 
   //check if file exists. if not, create a new file with no content
   if(!fpointer){
     fclose(fpointer); //close current pointer to file
-    fpointer = fopen("Inventory.csv", "w"); //open new file for writing
+    fpointer = fopen("C:inventoryText.csv", "w"); //open new file for writing
     printf("\nInventory.csv DOES NOT EXISTS. CREATING NEW FILE. \n");
     fprintf(fpointer, "", "");
   }
@@ -31,7 +31,7 @@ void filecheck()
 void add()
 	
      {
-     	FILE *fp = fopen("Inventory.csv", "a+");
+     	FILE *fp = fopen("C:inventoryText.csv", "a+");
      	
      	char id[6];             //Item ID
     	char description[41];   //Item Description
@@ -78,7 +78,7 @@ void add()
     
 	x = atoi(id);
 	
-	if(x >= 10000 && x <= 99999 && m <13 && d <32 && y >2000 )
+	if(x >= 10000 && x <= 99999 && m <13 && d <32 && y >2000 && qty < 0 && price < 0)
 	{	
 	fprintf(fp, "\"%s\",\"%s\",\"%u\",\"%d-%d-%d\",\"%5.2f\"\n", id, description, qty, y, m, d, price);
     printf("............ \n"); 
