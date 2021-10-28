@@ -1,15 +1,8 @@
 typedef struct {
-<<<<<<< HEAD
-    int id;                 //Item ID
-    char description[50];   //Item Description
-    int qty;                //Item Quantity
-    char exp[10];           //Item Expiry Date
-=======
     char id[6];             //Item ID
     char description[41];   //Item Description
     unsigned int qty;       //Item Quantity
     char exp[11];           //Item Expiry Date
->>>>>>> 4de6c6c... update update function
     float price;           //Item price
   } item;
 
