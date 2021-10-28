@@ -121,7 +121,7 @@ void searchInvItem(){
         {
         z=true;
         
-        printf("\nItem ID: %s",x[i].id);
+        printf("\nID: %s",x[i].id);
 	printf("\nDescription: %s",x[i].description);
         printf("\nQuantity: %d",x[i].qty);
 	printf("\nExpiry Date: %d",x[i].exp);
@@ -130,9 +130,9 @@ void searchInvItem(){
 			}
 	
 	}
- if(z==false){	//if the Item ID doesn't exist.
+	if(z==false){	//if the Item ID doesn't exist.
  
-	printf("Cant find the product id: %s.",id);
+	printf("Cant find the Item ID id: %s.",id);
 }
 	
 
