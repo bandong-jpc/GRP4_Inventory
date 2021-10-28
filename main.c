@@ -86,8 +86,6 @@ void update(){
       strcpy(detail, token);
      
       token = strtok(NULL, ",\"");
-
-
       switch (i)
       {
       case 0:
