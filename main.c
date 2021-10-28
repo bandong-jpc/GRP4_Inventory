@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "header.h"
+
+void filecheck();
 
 int main()
 {
@@ -51,4 +54,22 @@ int main()
 
 
   return 0;
+}
+
+void filecheck(){
+  //open file to read
+  FILE *fpointer = fopen("Inventory.csv", "r+");
+  
+
+  //check if file exists. if not, create a new file with no content
+  if(!fpointer){
+    fclose(fpointer); //close current pointer to file
+    fpointer = fopen("Inventory.csv", "w"); //open new file for writing
+    printf("\nInventory.csv DOES NOT EXISTS. CREATING NEW FILE. \n");
+    fprintf(fpointer, "", "");
+  }
+  
+
+  //close file to read
+  fclose(fpointer);
 }
