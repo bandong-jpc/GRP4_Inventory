@@ -181,7 +181,7 @@ void updateItem(struct Node** head_ref, int pos){
         (sscanf(price, "%f", &pr) == 1)
       ) 
       {
-        if(quan >= 0 && pr >= 0){
+        if(quan >= 0 && pr >= 0 && quan < 5000 && pr < 100000){
           strcpy(last->data.description, description);
           last->data.qty = quan;
           strcpy(last->data.exp, exp);
