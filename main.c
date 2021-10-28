@@ -75,67 +75,102 @@ void filecheck(){
 }
 
 
+void search(){
+  char id[6];
+  struct Node* head = NULL;
+  item x;
+  
+  
+  printf("\n\nPlease input Item ID to Search: ");
+  scanf("%d", id);
+  
 
 
-int readFile() // read file function
-{
-    int n = 0;
-    int i;
-    item x;
-    FILE *f;
-    
-    f = fopen("inventory.csv", "+r");
-    if (f == NULL)
-        return -1;
-    fscanf(f, "%d\n", &n);
-    for (i = 0; i < n; ++i)
-    {
-        fgets(x[i].id, 10, f);
-        x[i].id[strlen(x[i].id) - 1] = 0; 
-        fgets(x[i].description, 20, f);
-        x[i].description[strlen(x[i].description)-1] = 0; 
-        fscanf(f, "%d", &x[i].qty);
-        fscanf(f, "%d", &x[i].exp);
-        fscanf(f, "%f", &x[i].price);
-    }
-    fclose(f);
-    return n;
-}
+  //File pointer
+  FILE *fpointer = fopen("Inventory.csv", "r+");
+  //line variable for reading line
+  char line[255];
+  
+  char detail[50];
+  int i = 0, pos = -1, entries=0;
+  char confirm = 'x';
+  //check for how many entries in the file
+  while(!feof(fpointer)){
+    fgets(line, 255, fpointer); 
 
-
-void searchInvItem(){
-	
-
-    int i;
-    char id[10];
-    int z = false;
-    item x;
-    count = readFile();
-    printf("\nItem ID: ");
-    
-	fflush(stdin);
-	scanf("%s", &id);
-	//gets(id);
-    for (i=0; i<count; i++){
-        if (strcmp(id,x[i].id)==0) 	// compare Item ID to list.
+    strcpy(detail, line);
+    i=0;
+   // Extract the first token
+   char * token = strtok(detail, ",\"");
+   // loop through the string to extract all other tokens
+   while( token != NULL ) {
+      
+      strcpy(detail, token);
+     
+      token = strtok(NULL, ",\"");
+      switch (i)
+      {
+      case 0:
+        strcpy(x.id, detail);
+        if (strcmp(detail, id) == 0)
         {
-        z=true;
+          pos=entries;
+        }
         
-        printf("\nID: %s",x[i].id);
-	printf("\nDescription: %s",x[i].description);
-        printf("\nQuantity: %d",x[i].qty);
-	printf("\nExpiry Date: %d",x[i].exp);
-	printf("\nPrice: %f\n\n",x[i].price);
-	
-			}
-	
-	}
-	if(z==false){	//if the Item ID doesn't exist.
+        break;
+      
+      case 1:
+        strcpy(x.description, detail);
+        break;
+      
+      case 2:
+        x.qty = atoi(detail);
+        break;
+      
+      case 3:
+        strcpy(x.exp, detail);
+        break;
+      
+      case 4:
+        x.price = atof(detail);
+        break;
+      default:
+        break;
+      }
+      i++;
+   }
+
+    append(&head, x.id, x.description, x.qty, x.exp, x.price);
+    entries++;
+  }
+
+  fclose(fpointer);
+
+  if(pos == -1) printf("\nSorry, the Item ID you entered doesn't exist.\nPlease try another one.\n");
+  else{
+    showItem(&head, pos);
+
+  }
+  
+  
+   deleteList(&head);
+   
+
+        char choice;
+        printf("[1]Search again\n");
+        printf("[2]Return Main Menu: \n");
+        printf("Enter: ");
+        fflush(stdin);
+        scanf("%c",&choice);
+        if(choice== 1 )
+	    {
+	       search();
+		}
+        if(choice== 2)
+        {
+            int main ();
+        }
+
  
-	printf("Cant find the Item ID id: %s.",id);
-}
-	
 
 }
-
-
