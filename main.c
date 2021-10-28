@@ -5,7 +5,6 @@
 
 void filecheck();
 void update();
-void entry_counter();
 
 int main()
 {
