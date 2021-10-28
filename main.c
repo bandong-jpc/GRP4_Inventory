@@ -4,7 +4,7 @@
 #include "header.h"
 
 void update();
-int entry_counter();
+void entry_counter();
 
 int main()
 {
@@ -60,7 +60,7 @@ void update(){
   
   item x;
 
-  int ent = entry_counter();
+  entry_counter();
 
  /*  char id[255];
   //File pointer
@@ -123,17 +123,23 @@ void update(){
 }
 
 //function for counting the number of entries in the file
-int entry_counter(){
+void entry_counter(){
+  char toUpdate[6];
   struct Node* head = NULL;
   item x;
+
+
+  printf("\n\nENTER ITEM ID TO UPDATE: ");
+  scanf(" %s", toUpdate);
+
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
   //line variable for reading line
   char line[255];
-  //entries variable for storing number of entries
-  int entries = 0;
-char detail[50];
-    int i = 0;
+  
+  char detail[50];
+  int i = 0, pos = -1, entries=0;
+  char confirm = 'x';
   //check for how many entries in the file
   while(!feof(fpointer)){
     fgets(line, 255, fpointer); 
@@ -154,6 +160,11 @@ char detail[50];
       {
       case 0:
         strcpy(x.id, detail);
+        if (strcmp(detail, toUpdate) == 0)
+        {
+          pos=entries;
+        }
+        
         break;
       
       case 1:
@@ -171,25 +182,34 @@ char detail[50];
       case 4:
         x.price = atof(detail);
         break;
-      
-
-      
       default:
         break;
       }
-
-       
       i++;
    }
 
     append(&head, x.id, x.description, x.qty, x.exp, x.price);
-
     entries++;
   }
 
   fclose(fpointer);
 
-  showList(&head);
+  if(pos == -1) printf("\nITEM NOT FOUND! RETURNING TO MAIN MENU\n");
+  else{
+    showItem(&head, pos);
 
-  return entries;
+    do
+    {
+      printf("\nDO YOU WANT TO PROCEED (y/n)? ");
+      scanf(" %c", &confirm);
+    } while ((confirm!='y' && confirm!='n') || (confirm=='y' && confirm=='n'));
+    
+    if(confirm=='y'){
+      updateItem(&head, pos);
+    }
+
+  }
+
+  deleteList(&head);
+
 }

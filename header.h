@@ -2,7 +2,7 @@ typedef struct {
     char id[6];             //Item ID
     char description[41];   //Item Description
     unsigned int qty;       //Item Quantity
-    char exp[10];           //Item Expiry Date
+    char exp[11];           //Item Expiry Date
     float price;           //Item price
   } item;
 
@@ -82,6 +82,83 @@ void showList(struct Node** head_ref){
       printf("\n%s", last->data.id);
       last = last->next;
     }
+        
+    return;  
+}
+
+void showItem(struct Node** head_ref, int pos){
+  struct Node *last = *head_ref;  /* used in step 5*/
+  int i = 0;
+    if (*head_ref == NULL)
+    {
+      printf("\nEMPTY LIST");
+       return;
+    } 
+      
+    
+    while (last->next != NULL && i != pos){
+      printf("\n\t%s\n", last->data.id);
+      last = last->next;
+      i++;
+    }
+
+    printf("\n================ITEM DETAILS=================\n");
+    printf("\nITEM ID:\t%s\n", last->data.id);
+    printf("DESCRIPTION:\t%s\n", last->data.description);
+    printf("QUANTITY:\t%d\n", last->data.qty);
+    printf("EXPIRY DATE:\t%s\n", last->data.exp);
+    printf("PRICE:\t\t%.2f\n", last->data.price);
+    printf("\n=============================================\n");
+
+        
+    return;  
+}
+
+void updateItem(struct Node** head_ref, int pos){
+  struct Node *last = *head_ref;  /* used in step 5*/
+  int i = 0, year, month, day;
+  unsigned int quan;
+
+  char description[41];   //Item Description
+  char qty[5];            //Item Quantity
+  char exp[11];           //Item Expiry Date
+  char price[10];
+
+    if (*head_ref == NULL)
+    {
+      printf("\nEMPTY LIST");
+       return;
+    } 
+    while (last->next != NULL && i != pos){
+      last = last->next;
+      i++;
+    }
+
+    /* do
+    { */
+      printf("\nITEM DESCRIPTION: ");
+      scanf(" %s", description);
+      printf("\nITEM QUANTITY: ");
+      scanf(" %s", qty);
+      printf("\nITEM EXPIRATION DATE: ");
+      scanf(" %s", exp);
+      printf("\nITEM PRICE:  ");
+      scanf(" %s", price);
+
+      if (
+        (sscanf(exp, "%4d-%2d-%2d", &year, &month, &day) == 3 || strcmp("-", exp) == 0) &&
+        (sscanf(qty, "%d", &quan) == 1)
+      ) 
+      {
+        printf("correct\n");
+      }else{
+        printf("false\n");
+      }
+      
+
+    //} while ();
+    
+
         
     return;  
 }
