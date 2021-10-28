@@ -73,19 +73,21 @@ void filecheck(){
   //close file to read
   fclose(fpointer);
 }
-
 void search(){
   char id[6];
   struct Node* head = NULL;
   item x;
   int num = 0;
+  int s = 0;
+  char a[50];
+
   
   
   while (num == 0){
   	
   	printf("\n\nPlease input Item ID to Search: ");
-  	  scanf("%s", id);
-  	
+  	  scanf("%s", id);  	
+  
   	if ( sscanf(id, "%d", &num) != 1){
   		num = 0;
   		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n");
@@ -102,7 +104,7 @@ void search(){
  
   }
   
-  
+
 
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
@@ -168,6 +170,7 @@ void search(){
   else{
     showItem(&head, pos);
 
+
   }
   
   
@@ -179,12 +182,12 @@ void search(){
         printf("[2]Return Main Menu: \n");
         printf("Enter: ");
         fflush(stdin);
-        scanf("%c",&choice);
-        if(choice== 1 )
+        scanf("%d",&choice);
+        if(choice == 1 )
 	    {
 	       search();
 		}
-        if(choice== 2)
+        if(choice == 2)
         {
             int main ();
         }
