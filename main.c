@@ -74,17 +74,35 @@ void filecheck(){
   fclose(fpointer);
 }
 
-
 void search(){
   char id[6];
   struct Node* head = NULL;
   item x;
+  int num = 0;
   
   
-  printf("\n\nPlease input Item ID to Search: ");
-  scanf("%d", id);
+  while (num == 0){
+  	
+  	printf("\n\nPlease input Item ID to Search: ");
+  	  scanf("%s", id);
+  	
+  	if ( sscanf(id, "%d", &num) != 1){
+  		num = 0;
+  		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n");
+  		continue;
+	  }
+	  
+  	 if (num < 1 || num > 99999 ){
+  	 	num = 0;
+  	 	printf("Invalid range\n");
+  	 	continue;
+  	 	
+	   }
+ 
+ 
+  }
   
-
+  
 
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
