@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "header.h"
+#include "addinventory.c"
 
 void filecheck();
 
@@ -21,12 +22,12 @@ int main()
 
     printf("\n\nPLEASE INPUT CHOICE: ");
 
-    scanf("%c", &option);
+    scanf(" %c", &option);
 
     switch (option)
     {
     case 'a':
-      /* code */
+      add();
       break;
     case 'b':
       /* code */
