@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
-//#include "add & search.c"
-#include "search.c"
 #include "newdelete.c"
 #include "addinventory.c"
 
@@ -245,4 +243,147 @@ void displayInven(){
   display(&head);
     
     return;  
+}
+
+
+
+void choice(){
+	
+	char choice;
+	
+	printf("\n[1]Search again\n");
+    printf("[2]Return Main Menu: \n");
+    printf("Enter: ");
+    fflush(stdin);
+    scanf("%d",&choice);
+        if(choice == 1 )
+	    {
+	       search();
+		}
+        if(choice == 2)
+        {
+            int main ();
+        }
+	
+}
+
+
+void search(){
+  char id[6];
+  struct Node* head = NULL;
+  int c;
+  int v;
+  int num = 0;
+  int s = 0;
+  char a[50];
+  item x;
+  
+  
+  while (num == 0){
+
+
+  	printf("\n\nPlease input Item ID to Search: ");
+  	scanf ("%s", id);    	  	
+  	
+  	
+  	for (c=0; c<5 ; c++){
+ 	if ( id[c] >= 'a' && id[c] <= 'z' ){
+ 		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
+		choice();
+		c = 6;
+	   }
+  	
+  	if ( sscanf(id, "%d", &num) != 1){
+  		num = 0;
+  		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
+  		choice();
+	   }
+	  
+  	if (num < 1 || num > 99999 ){
+  	 	num = 0;
+  	 	printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
+  	 	choice();
+	   }
+ 	  
+ 	
+   } 
+ 
+  }
+  
+
+  //File pointer
+  FILE *fpointer = fopen("Inventory.csv", "r+");
+  //line variable for reading line
+  char line[255];
+  
+  char detail[50];
+  int i = 0, pos = -1, entries=0;
+  char confirm = 'x';
+  //check for how many entries in the file
+  while(!feof(fpointer)){
+    fgets(line, 255, fpointer); 
+
+    strcpy(detail, line);
+    i=0;
+   // Extract the first token
+   char * token = strtok(detail, ",\"");
+   // loop through the string to extract all other tokens
+   while( token != NULL ) {
+      
+      strcpy(detail, token);
+     
+      token = strtok(NULL, ",\"");
+      switch (i)
+      {
+      case 0:
+        strcpy(x.id, detail);
+        if (strcmp(detail, id) == 0)
+        {
+          pos=entries;
+        }
+        
+        break;
+      
+      case 1:
+        strcpy(x.description, detail);
+        break;
+      
+      case 2:
+        x.qty = atoi(detail);
+        break;
+      
+      case 3:
+        strcpy(x.exp, detail);
+        break;
+      
+      case 4:
+        x.price = atof(detail);
+        break;
+      default:
+        break;
+      }
+      i++;
+   }
+
+    append(&head, x.id, x.description, x.qty, x.exp, x.price);
+    entries++;
+  }
+
+  fclose(fpointer);
+
+  if(pos == -1) printf("\nSorry, the Item ID you entered doesn't exist.\nPlease try another one.\n\n");
+  else{
+    showItem(&head, pos);
+
+
+  }
+  
+  
+   deleteList(&head);
+   
+
+   choice();
+
+ 
+
 }
