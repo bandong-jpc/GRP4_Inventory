@@ -7,7 +7,7 @@ typedef struct {
     char description[41];   //Item Description
     unsigned int qty;       //Item Quantity
     char exp[10];           //Item Expiry Date
-    float price;            //Item price
+    float price;           //Item price
   } item;
   
 void filecheck()
@@ -36,13 +36,15 @@ void add()
      	char id[6];              //Item ID
     	char description[41];    //Item Description
     	unsigned int qty;        //Item Quantity
-		  char exp[10];            //Item Expiry Date
+		char exp[10];            //Item Expiry Date
     	float price;             //Item price
-    	int x;				           //Char converter to Int
-    	int y;                   //Format Year
-    	int m;                   //Format Month
-    	int d;                   //Format Date
-    	
+    	int x;				     //Char converter to Int
+    	char y[4];                   //Format Year
+    	char m[2];                   //Format Month
+    	char d[2];                   //Format Date
+    	int year;
+    	int month;
+    	int date;
     	
     	int R = qty;
     	if(!fp)
@@ -65,24 +67,27 @@ void add()
     fflush(stdin);
     printf("Input Item Expiry Date in YYYY-MM-DD\n");
     printf("Year: ");
-    scanf(" %d", &y);
+    scanf(" %s", &y);
     fflush(stdin);
     printf("Month: ");
-    scanf(" %d", &m);
+    scanf(" %s", &m);
     fflush(stdin);
     printf("Date: ");
-    scanf(" %d", &d);
-	  printf("\n");
+    scanf(" %s", &d);
+	printf("\n");
     fflush(stdin);
     printf("Input Item Price:");
     scanf(" %f", &price);
     printf("\n");
     
 	x = atoi(id);
+	year = atoi(y);
+	month = atoi(m);
+	date = atoi(d);
 	
-	if(x > 9999 && x < 100000 && m <13 && d <32 && y >2000 && R > 0 && price > 0 )
+	if ((x > 9999 && x < 100000 && R > 0 && price > 0) && ((month < 13 or month == '-') && (date <32) && (year < 3000 or year > 2000)) && ((month < 13) && (date <32  or date == '-') && (year < 3000 or year > 2000)) && ((month < 13) && (date <32) && (year < 3000 or year == '-' or year > 2000 )))
 	{	
-	fprintf(fp, "\"%s\",\"%s\",\"%d\",\"%d-%d-%d\",\"%5.2f\"\n", id, description, R, y, m, d, price);
+	fprintf(fp, "\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"\n", id, description, R, y, m, d, price);
     printf("............ \n"); 
  	printf("............ \n"); 
     printf("Success! Inventory Item added! \n" );
