@@ -32,18 +32,23 @@ int main()
     switch (option)
     {
     case 'a':
+    filecheck();
       add();
       break;
     case 'b':
+    filecheck();
       update();
       break;
     case 'c':
+    filecheck();
       displayInven();
       break;
     case 'd':
+    filecheck();
       search();
       break;
     case 'e':
+    filecheck();
       delete_rec();
       break;
     case 'x':
