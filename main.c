@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
-#include "add & search.c"
+//#include "add & search.c"
+#include "search.c"
 #include "newdelete.c"
 #include "addinventory.c"
 
