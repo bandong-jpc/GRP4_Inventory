@@ -2,13 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
-#include "add & search.c"
-#include "newdelete.c"
-#include "addinventory.c"
 
-void filecheck();
 void update();
-void displayInven();
 
 int main()
 {
@@ -38,13 +33,13 @@ int main()
       update();
       break;
     case 'c':
-      displayInven();
+      /* code */
       break;
     case 'd':
       search();
       break;
     case 'e':
-      delete_rec();
+      /* code */
       break;
     case 'x':
       break;
@@ -59,6 +54,81 @@ int main()
   
   return 0;
 }
+
+
+void add()
+	
+     {
+     	FILE *fp = fopen("Inventory.csv", "a+");
+     	
+     	char id[6];             //Item ID
+    	char description[41];   //Item Description
+    	unsigned int qty;       //Item Quantity
+    	char exp[10];           //Item Expiry Date
+    	float price;           //Item price
+    	int x;
+    	int y;
+    	int m;
+    	int d;
+    
+    	if(!fp)
+    	{
+    	printf("Can't open file\n");
+        return;
+        }
+  
+    printf("Input 5-digit Item ID:");   
+    scanf(" %6s", &id);
+    printf("\n");
+    fflush(stdin);
+    printf("Input Item Description:");
+    scanf(" %41s", &description);
+    printf("\n");
+    fflush(stdin);
+    printf("Input Item Quantity:");
+    scanf(" %u", &qty);
+    printf("\n");
+    fflush(stdin);
+    printf("Input Item Expiry Date in YYYY-MM-DD\n");
+    printf("Year: ");
+    scanf(" %d", &y);
+    fflush(stdin);
+    printf("Month: ");
+    scanf(" %d", &m);
+    fflush(stdin);
+    printf("Date: ");
+    scanf(" %d", &d);
+	printf("\n");
+    fflush(stdin);
+    printf("Input Item Price:");
+    scanf(" %f", &price);
+    printf("\n");
+    
+	x = atoi(id);
+	
+	if(x > 9999 && x < 100000 && m <13 && d <32 && y >2000 && qty > 0 && price > 0)
+	{	
+	fprintf(fp, "\"%s\",\"%s\",\"%u\",\"%d-%d-%d\",\"%5.2f\"\n", id, description, qty, y, m, d, price);
+    printf("............ \n"); 
+ 	printf("............ \n"); 
+    printf("Success! Inventory Item added! \n" );
+    
+    fclose(fp);	
+	}
+	else
+	{	
+	printf("Error! Invalid Input! Item not added. \n");
+	}
+	
+	return;
+		}
+		
+
+
+
+
+
+
 
 void update(){
   char toUpdate[6];
@@ -146,33 +216,73 @@ void update(){
   }
 
   deleteList(&head);
+
 }
 
-void filecheck(){
+void choice(){
+	
+	char choice;
+	
+	printf("\n[1]Search again\n");
+    printf("[2]Return Main Menu: \n");
+    printf("Enter: ");
+    fflush(stdin);
+    scanf("%d",&choice);
+        if(choice == 1 )
+	    {
+	       search();
+		}
+        if(choice == 2)
+        {
+            int main ();
+        }
+	
+}
 
-  //open file to read
-  FILE *fpointer = fopen("Inventory.csv", "r+");
+
+void search(){
+  char id[5];
+  struct Node* head = NULL;
+  int c;
+  int v;
+  int num = 0;
+  int s = 0;
+  char a[50];
+  item x;
   
+  
+  while (num == 0){
 
-  //check if file exists. if not, create a new file with no content
-  if(!fpointer){
-    fclose(fpointer); //close current pointer to file
-    fpointer = fopen("Inventory.csv", "w"); //open new file for writing
-    printf("\nInventory.csv DOES NOT EXISTS. CREATING NEW FILE. \n");
-    fprintf(fpointer, "", "");
+
+  	printf("\n\nPlease input Item ID to Search: ");
+  	scanf ("%s", id);    	  	
+  	
+  	
+  	for (c=0; c<5 ; c++){
+ 	if ( id[c] >= 'a' && id[c] <= 'z' ){
+ 		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
+		choice();
+		c = 6;
+	   }
+  	
+  	if ( sscanf(id, "%d", &num) != 1){
+  		num = 0;
+  		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
+  		choice();
+	   }
+	  
+  	if (num < 1 || num > 99999 ){
+  	 	num = 0;
+  	 	printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
+  	 	choice();
+	   }
+ 	  
+ 	
+   } 
+ 
   }
   
 
-  //close file to read
-  fclose(fpointer);
-}
-
-void displayInven(){
-	 char toUpdate[6];
-	struct Node* head = NULL;
-  item x;
-
-	
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
   //line variable for reading line
@@ -195,13 +305,11 @@ void displayInven(){
       strcpy(detail, token);
      
       token = strtok(NULL, ",\"");
-
-
       switch (i)
       {
       case 0:
         strcpy(x.id, detail);
-        if (strcmp(detail, toUpdate) == 0)
+        if (strcmp(detail, id) == 0)
         {
           pos=entries;
         }
@@ -234,9 +342,20 @@ void displayInven(){
   }
 
   fclose(fpointer);
+
+  if(pos == -1) printf("\nSorry, the Item ID you entered doesn't exist.\nPlease try another one.\n\n");
+  else{
+    showItem(&head, pos);
+
+
+  }
   
-  printf("==========INVENTORY LIST==========\n");
-  display(&head);
-    
-    return;  
+  
+   deleteList(&head);
+   
+
+   choice();
+
+ 
+
 }
