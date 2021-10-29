@@ -241,7 +241,7 @@ void choice(){
 
 
 void search(){
-  char id[5];
+  char id[6];
   struct Node* head = NULL;
   int c;
   int v;
