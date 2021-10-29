@@ -198,4 +198,26 @@ void updateItem(struct Node** head_ref, int pos){
     return;  
 }
 
-
+void display(struct Node** head_ref){
+ 
+    struct Node *last = *head_ref;  /* used in step 5*/
+ 
+    
+    if (*head_ref == NULL)
+    {
+      printf("\nEMPTY LIST");
+       return;
+    } 
+    /* 5. Else traverse till the last node */
+    while (last->next != NULL){
+      printf("ID: %s\n", last->data.id);
+      printf("Description: %s\n", last->data.description);
+      printf("Quantity: %d\n", last->data.qty);
+      printf("Expiry Date: %s\n", last->data.exp);
+      printf("Price: 2%f\n", last->data.price);
+      printf("=========================================\n");
+      last = last->next;
+    }
+       
+    return;  
+}
