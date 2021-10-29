@@ -3,6 +3,36 @@
 #include<ctype.h>
 #include<string.h>
 
+typedef struct item{
+    int id;                 //Item ID
+    char description[41];   //Item Description
+    unsigned int qty;       //Item Quantity
+    char exp[10];           //Item Expiry Date
+    float price;           //Item price
+  } item;
+void filecheck();
+ void add()
+ {
+    item p1;
+    FILE *fp;
+    fp = fopen("inventoryN.csv", "a");
+
+    printf("\nEnter ID : ");
+    scanf(" %d",&p1.id);
+    printf("Enter Description : ");
+    scanf(" %s",p1.description);
+    printf("Enter Quantity : ");
+    scanf(" %d",&p1.qty);
+    printf("Enter Expiration : ");
+    scanf(" %s",p1.exp);
+    printf("Enter Price : ");
+    scanf(" %f",&p1.price);
+
+    fwrite(&p1, sizeof(item), 1, fp);
+
+
+    fclose(fp);
+ }
 void delete_rec()
 {
 
@@ -33,7 +63,7 @@ void delete_rec()
         }
         if (check == 0)
         {
-            printf("Incheck ID");
+            printf("\nIncheck ID\n");
         }
         else if (check == 1)
         {
@@ -76,14 +106,14 @@ void delete_rec()
                      {
                         fwrite(&s1,sizeof(item),1,fp);
                      }
-                     printf("\nDELETE SUCCESSFUL!!!!!!!\n\n");
+                     printf("\n/*/*/*DELETED*/*/*/n\n");
                      fclose(fp);
                      fclose(fpl);
                      deleteG = 1;
                 }
                 else if(strcmp (choke, "N") == 0 || strcmp (choke, "n") == 0)
                 {
-                    printf("\nDELETE CANCELLED\n\n");
+                    printf("\n/*/*/*CANCELLED DELETE*/*/*/\n\n");
                     deleteG = 1;
                     delete_rec();
 
@@ -97,4 +127,68 @@ void delete_rec()
 
              }
     }
+}
+int main()
+{
+
+
+    char option = 'x';
+
+  do
+  {
+    printf("\n\nMAIN MENU");
+    printf("\n[A] ADD INVENTORY ITEM");
+    printf("\n[E] DELETE INVENTORY ITEM");
+    printf("\n[X] EXIT PROGRAM");
+    printf("\nEnter Your Choice: ");
+
+    scanf(" %c", &option);
+
+    switch (option)
+    {
+    case 'a':
+    // Add Inventory Item
+        filecheck();
+        add();
+        break;
+    case 'e':
+      // Delete Inventory Item
+        filecheck();
+        delete_rec();
+      break;
+    case 'E':
+      // Delete Inventory Item
+        filecheck();
+        delete_rec();
+      break;
+    case 'x':
+      break;
+
+    default:
+      printf("\n\nINVALID OPTION\n\n");
+    }
+
+  } while (
+    option!='x'
+  );
+
+   return 0;
+}
+void filecheck()
+{
+  //open file to read
+  FILE *fpointer = fopen("inventoryText.csv", "r+");
+
+
+  //check if file exists. if not, create a new file with no content
+  if(!fpointer){
+    fclose(fpointer); //close current pointer to file
+    fpointer = fopen("inventoryText.csv", "w"); //open new file for writing
+    printf("\nInventory.csv DOES NOT EXISTS. CREATING NEW FILE. \n");
+    fprintf(fpointer, "", "");
+  }
+
+
+  //close file to read
+  fclose(fpointer);
 }
