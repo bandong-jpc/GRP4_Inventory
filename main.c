@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
+#include "addinventory.c"
 
 void filecheck();
 void update();
@@ -28,7 +29,7 @@ int main()
     switch (option)
     {
     case 'a':
-      /* code */
+      add();
       break;
     case 'b':
       update();
