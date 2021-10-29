@@ -3,36 +3,6 @@
 #include<ctype.h>
 #include<string.h>
 
-typedef struct item{
-    int id;                 //Item ID
-    char description[41];   //Item Description
-    unsigned int qty;       //Item Quantity
-    char exp[10];           //Item Expiry Date
-    float price;           //Item price
-  } item;
-
- void add()
- {
-    item product;
-    FILE *fp;
-    fp = fopen("inventoryN.csv", "a");
-
-    printf("\nEnter Product ID : ");
-    scanf(" %d",&product.id);
-    printf("Enter Product Description : ");
-    scanf(" %s",product.description);
-    printf("Enter Product Quantity : ");
-    scanf(" %d",&product.qty);
-    printf("Enter Product Expiration : ");
-    scanf(" %s",product.exp);
-    printf("Enter Product Price : ");
-    scanf(" %f",&product.price);
-
-    fwrite(&product, sizeof(item), 1, fp);
-
-
-    fclose(fp);
- }
 void delete_rec()
 {
 
@@ -127,68 +97,4 @@ void delete_rec()
 
              }
     }
-}
-int main()
-{
-
-
-    char option = 'x';
-
-  do
-  {
-    printf("\n\nMAIN MENU");
-    printf("\n[A] ADD INVENTORY ITEM");
-    printf("\n[E] DELETE INVENTORY ITEM");
-    printf("\n[X] EXIT PROGRAM");
-    printf("\nEnter Your Choice: ");
-
-    scanf(" %c", &option);
-
-    switch (option)
-    {
-    case 'a':
-    // Add Inventory Item
-        filecheck();
-        add();
-        break;
-    case 'e':
-      // Delete Inventory Item
-        filecheck();
-        delete_rec();
-      break;
-    case 'E':
-      // Delete Inventory Item
-        filecheck();
-        delete_rec();
-      break;
-    case 'x':
-      break;
-
-    default:
-      printf("\n\nINVALID OPTION\n\n");
-    }
-
-  } while (
-    option!='x'
-  );
-
-   return 0;
-}
-void filecheck()
-{
-  //open file to read
-  FILE *fpointer = fopen("inventoryText.csv", "r+");
-
-
-  //check if file exists. if not, create a new file with no content
-  if(!fpointer){
-    fclose(fpointer); //close current pointer to file
-    fpointer = fopen("inventoryText.csv", "w"); //open new file for writing
-    printf("\nInventory.csv DOES NOT EXISTS. CREATING NEW FILE. \n");
-    fprintf(fpointer, "", "");
-  }
-
-
-  //close file to read
-  fclose(fpointer);
 }

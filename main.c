@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "header.h"
+#include "newdelete.c"
 
 void filecheck();
 
@@ -38,7 +39,7 @@ int main()
       /* code */
       break;
     case 'e':
-      /* code */
+      delete_rec();
       break;
     case 'x':
       break;
