@@ -13,13 +13,13 @@ typedef struct {
 void filecheck()
 {
   //open file to read
-  FILE *fpointer = fopen("C:inventoryText.csv", "r+");
+  FILE *fpointer = fopen("Inventory.csv", "r+");
 
 
   //check if file exists. if not, create a new file with no content
   if(!fpointer){
     fclose(fpointer); //close current pointer to file
-    fpointer = fopen("C:inventoryText.csv", "w"); //open new file for writing
+    fpointer = fopen("Inventory.csv", "w"); //open new file for writing
     printf("\nInventory.csv DOES NOT EXISTS. CREATING NEW FILE. \n");
     fprintf(fpointer, "", "");
   }
@@ -31,18 +31,22 @@ void filecheck()
 void add()
 	
      {
-     	FILE *fp = fopen("C:inventoryText.csv", "a+");
+     	FILE *fp = fopen("Inventory.csv", "a+");
      	
-     	char id[6];             //Item ID
-    	char description[41];   //Item Description
-    	unsigned int qty;       //Item Quantity
-    	char exp[10];           //Item Expiry Date
-    	float price;           //Item price
-    	int x;
-    	int y;
-    	int m;
-    	int d;
-    
+     	char id[6];              //Item ID
+    	char description[41];    //Item Description
+    	unsigned int qty;        //Item Quantity
+		char exp[10];            //Item Expiry Date
+    	float price;             //Item price
+    	int x;				     //Char converter to Int
+    	char y[4];                   //Format Year
+    	char m[2];                   //Format Month
+    	char d[2];                   //Format Date
+    	int year;
+    	int month;
+    	int date;
+    	
+    	int R = qty;
     	if(!fp)
     	{
     	printf("Can't open file\n");
@@ -58,18 +62,18 @@ void add()
     printf("\n");
     fflush(stdin);
     printf("Input Item Quantity:");
-    scanf(" %u", &qty);
+    scanf(" %d", &R);
     printf("\n");
     fflush(stdin);
     printf("Input Item Expiry Date in YYYY-MM-DD\n");
     printf("Year: ");
-    scanf(" %d", &y);
+    scanf(" %s", &y);
     fflush(stdin);
     printf("Month: ");
-    scanf(" %d", &m);
+    scanf(" %s", &m);
     fflush(stdin);
     printf("Date: ");
-    scanf(" %d", &d);
+    scanf(" %s", &d);
 	printf("\n");
     fflush(stdin);
     printf("Input Item Price:");
@@ -77,13 +81,16 @@ void add()
     printf("\n");
     
 	x = atoi(id);
+	year = atoi(y);
+	month = atoi(m);
+	date = atoi(d);
 	
-	if(x >= 10000 && x <= 99999 && m <13 && d <32 && y >2000 )
+	if ((x > 9999 && x < 100000 && R > 0 && price > 0) && ((month < 13 or month == '-') && (date <32) && (year < 3000 or year > 2000)) && ((month < 13) && (date <32  or date == '-') && (year < 3000 or year > 2000)) && ((month < 13) && (date <32) && (year < 3000 or year == '-' or year > 2000 )))
 	{	
-	fprintf(fp, "\"%s\",\"%s\",\"%u\",\"%d-%d-%d\",\"%5.2f\"\n", id, description, qty, y, m, d, price);
+	fprintf(fp, "\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"\n", id, description, R, y, m, d, price);
     printf("............ \n"); 
  	printf("............ \n"); 
-    printf("Success! Inventory Item has been added! \n" );
+    printf("Success! Inventory Item added! \n" );
     
     fclose(fp);	
 	}
