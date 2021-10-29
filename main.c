@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
+#include "newdelete.c"
 #include "addinventory.c"
 
 void filecheck();
@@ -42,7 +43,7 @@ int main()
       /* code */
       break;
     case 'e':
-      /* code */
+      delete_rec();
       break;
     case 'x':
       break;
