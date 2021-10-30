@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 typedef struct {
     char id[6];             //Item ID
@@ -28,11 +28,14 @@ void filecheck()
   //close file to read
   fclose(fpointer);
 }
+
+
 void add()
 	
-     {
-     	FILE *fp = fopen("Inventory.csv", "a+");
-     	
+{
+
+		FILE *fp;
+     	fp = fopen("Inventory.csv", "a+");
      	char id[6];              //Item ID
     	char description[41];    //Item Description
     	unsigned int qty;        //Item Quantity
@@ -45,15 +48,17 @@ void add()
     	int year;
     	int month;
     	int date;
+    	int bufferLength = 255;
+	    int idExists = 0;
     	
     	int R = qty;
     	if(!fp)
     	{
     	printf("Can't open file\n");
         return;
-        }
-  
-    printf("Input 5-digit Item ID:");   
+    	}
+    
+	printf("Input 5-digit Item ID:");   
     scanf(" %6s", &id);
     printf("\n");
     fflush(stdin);
@@ -85,22 +90,46 @@ void add()
 	month = atoi(m);
 	date = atoi(d);
 	
-	if ((x > 9999 && x < 100000 && R > 0 && price > 0) && ((month < 13 or month == '-') && (date <32) && (year < 3000 or year > 2000)) && ((month < 13) && (date <32  or date == '-') && (year < 3000 or year > 2000)) && ((month < 13) && (date <32) && (year < 3000 or year == '-' or year > 2000 )))
-	{	
-	fprintf(fp, "\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"\n", id, description, R, y, m, d, price);
-    printf("............ \n"); 
- 	printf("............ \n"); 
-    printf("Success! Inventory Item added! \n" );
-    
-    fclose(fp);	
+	char line[bufferLength];
+	fp = fopen("Inventory.csv", "r");
+		while(fgets(line, bufferLength, fp))
+	{
+		char *ptr = strstr(line, id);
+		if (ptr != NULL) 
+		{
+			idExists=1;
+			break;
+		}
+	}
+	fclose(fp);
+	if (idExists==1)
+	{
+		printf("Error! ID already exists! Item not added. \n");
 	}
 	else
-	{	
-	printf("Error! Invalid Input! Item not added. \n");
+	{
+	if((x > 9999 && x < 100000 && R > 0 && price > 0) && ((month < 13 or month == '-') && (date <32) && (year < 3000 or year > 2000)) && ((month < 13) && (date <32  or date == '-') && (year < 3000 or year > 2000)) && ((month < 13) && (date <32) && (year < 3000 or year == '-' or year > 2000 )))
+		{	
+					fp = fopen("Inventory.csv", "a+");
+					fprintf(fp, "\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"\n", id, description, R, y, m, d, price);
+   					printf("............ \n"); 
+ 					printf("............ \n"); 
+   	 				printf("Success! Inventory Item added! \n" );
+    
+    				fclose(fp);	
+		}
+	else
+		{	
+					printf("Error! Invalid Input! Item not added. \n");
+		}		
 	}
+
 	
 	return;
-		}
+}
+
+	
+		
 	
     
 int main()
