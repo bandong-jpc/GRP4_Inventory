@@ -77,7 +77,7 @@ void update(){
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
   //line variable for reading line
-  char line[255];
+  char line[255] = "";
   
   char detail[50];
   int i = 0, pos = -1, entries=0;
@@ -87,6 +87,9 @@ void update(){
     fgets(line, 255, fpointer); 
 
     strcpy(detail, line);
+
+    if(strlen(detail) <= 10) continue; //check if line is empty
+    if(strlen(detail) <= 10 && feof(fpointer)) break;
     i=0;
    // Extract the first token
    char * token = strtok(detail, ",\"");
@@ -100,7 +103,7 @@ void update(){
       {
       case 0:
         strcpy(x.id, detail);
-        if (strcmp(detail, toUpdate) == 0)
+        if (strcmp(detail, toUpdate) == 0 && pos == -1)
         {
           pos=entries;
         }
@@ -125,10 +128,14 @@ void update(){
       default:
         break;
       }
+      if(i==4){
+        append(&head, x.id, x.description, x.qty, x.exp, x.price);
+        i=0;
+        break;
+      }
       i++;
    }
 
-    append(&head, x.id, x.description, x.qty, x.exp, x.price);
     entries++;
   }
 
