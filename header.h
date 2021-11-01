@@ -2,8 +2,9 @@ typedef struct {
     char id[6];             //Item ID
     char description[41];   //Item Description
     unsigned int qty;       //Item Quantity
-    char exp[11];           //Item Expiry Date
+    char exp[10];           //Item Expiry Date
     float price;           //Item price
+<<<<<<< HEAD
   } item;
 
 struct Node{
@@ -230,3 +231,6 @@ void display(struct Node** head_ref){
        
     return;  
 }
+=======
+  } item;
+>>>>>>> 895c4054174aa22f16033bc3382b6ecefa5ff724
