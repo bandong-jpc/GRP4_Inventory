@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "header.h"
-#include "newdelete.c"
 #include "addinventory.c"
 
 void filecheck();
@@ -10,6 +9,7 @@ void update();
 void displayInven();
 void choice();
 void search();
+void delete();
 
 int main()
 {
@@ -50,7 +50,7 @@ int main()
       break;
     case 'e':
     filecheck();
-      delete_rec();
+      delete();
       break;
     case 'x':
       break;
@@ -254,8 +254,6 @@ void displayInven(){
     return;  
 }
 
-
-
 void choice(){
 	
 	char choice;
@@ -276,7 +274,6 @@ void choice(){
         }
 	
 }
-
 
 void search(){
   char id[6];
@@ -399,4 +396,98 @@ void search(){
 
  
 
+}
+
+void delete(){
+  char toDelete[6];
+  struct Node* head = NULL;
+  item x;
+
+  printf("Enter the product ID number you want to delete: ");
+  scanf(" %s", toDelete);
+
+  //File pointer
+  FILE *fpointer = fopen("Inventory.csv", "r+");
+  //line variable for reading line
+  char line[255] = "";
+  
+  char detail[50];
+  int i = 0, pos = -1, entries=0;
+  char confirm = 'x';
+  //check for how many entries in the file
+  while(!feof(fpointer)){
+    fgets(line, 255, fpointer); 
+
+    strcpy(detail, line);
+
+    if(strlen(detail) <= 10) continue; //check if line is empty
+    if(strlen(detail) <= 10 && feof(fpointer)) break;
+    i=0;
+   // Extract the first token
+   char * token = strtok(detail, ",\"");
+   // loop through the string to extract all other tokens
+   while( token != NULL ) {
+      
+      strcpy(detail, token);
+     
+      token = strtok(NULL, ",\"");
+      switch (i)
+      {
+      case 0:
+        strcpy(x.id, detail);
+        if (strcmp(detail, toDelete) == 0 && pos == -1)
+        {
+          pos=entries;
+        }
+        
+        break;
+      
+      case 1:
+        strcpy(x.description, detail);
+        break;
+      
+      case 2:
+        x.qty = atoi(detail);
+        break;
+      
+      case 3:
+        strcpy(x.exp, detail);
+        break;
+      
+      case 4:
+        x.price = atof(detail);
+        break;
+      default:
+        break;
+      }
+      if(i==4){
+        append(&head, x.id, x.description, x.qty, x.exp, x.price);
+        i=0;
+        break;
+      }
+      i++;
+   }
+
+    entries++;
+  }
+
+  fclose(fpointer);
+
+  if(pos == -1) printf("\nITEM NOT FOUND! RETURNING TO MAIN MENU\n");
+  else{
+    showItem(&head, pos);
+
+    do
+    {
+      printf("\nARE YOU SURE YOU WANT TO DELETE THIS ITEM (y/n)? ");
+      scanf(" %c", &confirm);
+    } while ((confirm!='y' && confirm!='n') || (confirm=='y' && confirm=='n'));
+    
+    if(confirm=='y'){
+      deleteItem(&head, toDelete);
+    }
+
+  }
+
+  deleteList(&head);
 }

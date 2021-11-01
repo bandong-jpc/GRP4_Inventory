@@ -134,7 +134,7 @@ void showItem(struct Node** head_ref, int pos){
       i++;
     }
 
-    printf("\n================ITEM DETAILS=================\n");
+    printf("\n\n================ITEM DETAILS=================\n");
     printf("\nITEM ID:\t%s\n", last->data.id);
     printf("DESCRIPTION:\t%s\n", last->data.description);
     printf("QUANTITY:\t%d\n", last->data.qty);
@@ -218,7 +218,7 @@ void display(struct Node** head_ref){
        return;
     } 
     /* 5. Else traverse till the last node */
-    while (last->next != NULL){
+    while (last != NULL){
       printf("ID: %s\n", last->data.id);
       printf("Description: %s\n", last->data.description);
       printf("Quantity: %d\n", last->data.qty);
@@ -228,5 +228,36 @@ void display(struct Node** head_ref){
       last = last->next;
     }
        
+    return;  
+}
+
+void deleteItem(struct Node** head_ref, char *id ){
+  struct Node* last = *head_ref, *temp = *head_ref;  /* used in step 5*/
+  int i = 0;
+      
+    while (temp->next != NULL && strcmp(id, temp->data.id) != 0){
+      temp = temp->next;
+    }
+
+    //search for the node before node to be deleted
+    while (last->next != temp){ 
+      last = last->next;
+    }
+
+    //point node before node to be deleted to the next node after the node to be deleted
+    last->next = temp->next;
+
+    saveToFile(head_ref);
+
+    printf("\n\n===============ITEM DELETED================\n");
+    printf("\nITEM ID:\t%s\n", temp->data.id);
+    printf("DESCRIPTION:\t%s\n", temp->data.description);
+    printf("QUANTITY:\t%d\n", temp->data.qty);
+    printf("EXPIRY DATE:\t%s\n", temp->data.exp);
+    printf("PRICE:\t\t%.2f\n", temp->data.price);
+    printf("\n=============================================\n");
+
+    /* display(head_ref); */
+    free(temp);
     return;  
 }
