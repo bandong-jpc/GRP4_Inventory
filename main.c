@@ -13,7 +13,7 @@ void delete();
 
 int main()
 {
-  
+
   char option = 'x';
 
   do
@@ -62,7 +62,7 @@ int main()
   } while (
     option!='x'
   );
-  
+
   return 0;
 }
 
@@ -79,13 +79,13 @@ void update(){
   FILE *fpointer = fopen("Inventory.csv", "r+");
   //line variable for reading line
   char line[255] = "";
-  
+
   char detail[50];
   int i = 0, pos = -1, entries=0;
   char confirm = 'x';
   //check for how many entries in the file
   while(!feof(fpointer)){
-    fgets(line, 255, fpointer); 
+    fgets(line, 255, fpointer);
 
     strcpy(detail, line);
 
@@ -96,9 +96,9 @@ void update(){
    char * token = strtok(detail, ",\"");
    // loop through the string to extract all other tokens
    while( token != NULL ) {
-      
+
       strcpy(detail, token);
-     
+
       token = strtok(NULL, ",\"");
       switch (i)
       {
@@ -108,21 +108,21 @@ void update(){
         {
           pos=entries;
         }
-        
+
         break;
-      
+
       case 1:
         strcpy(x.description, detail);
         break;
-      
+
       case 2:
         x.qty = atoi(detail);
         break;
-      
+
       case 3:
         strcpy(x.exp, detail);
         break;
-      
+
       case 4:
         x.price = atof(detail);
         break;
@@ -151,7 +151,7 @@ void update(){
       printf("\nDO YOU WANT TO PROCEED (y/n)? ");
       scanf(" %c", &confirm);
     } while ((confirm!='y' && confirm!='n') || (confirm=='y' && confirm=='n'));
-    
+
     if(confirm=='y'){
       updateItem(&head, pos);
     }
@@ -165,7 +165,7 @@ void filecheck(){
 
   //open file to read
   FILE *fpointer = fopen("Inventory.csv", "r+");
-  
+
 
   //check if file exists. if not, create a new file with no content
   if(!fpointer){
@@ -174,7 +174,7 @@ void filecheck(){
     printf("\nInventory.csv DOES NOT EXISTS. CREATING NEW FILE. \n");
     fprintf(fpointer, "", "");
   }
-  
+
 
   //close file to read
   fclose(fpointer);
@@ -185,18 +185,18 @@ void displayInven(){
 	struct Node* head = NULL;
   item x;
 
-	
+
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
   //line variable for reading line
   char line[255];
-  
+
   char detail[50];
   int i = 0, pos = -1, entries=0;
   char confirm = 'x';
   //check for how many entries in the file
   while(!feof(fpointer)){
-    fgets(line, 255, fpointer); 
+    fgets(line, 255, fpointer);
 
     strcpy(detail, line);
     i=0;
@@ -204,9 +204,9 @@ void displayInven(){
    char * token = strtok(detail, ",\"");
    // loop through the string to extract all other tokens
    while( token != NULL ) {
-      
+
       strcpy(detail, token);
-     
+
       token = strtok(NULL, ",\"");
 
 
@@ -218,21 +218,21 @@ void displayInven(){
         {
           pos=entries;
         }
-        
+
         break;
-      
+
       case 1:
         strcpy(x.description, detail);
         break;
-      
+
       case 2:
         x.qty = atoi(detail);
         break;
-      
+
       case 3:
         strcpy(x.exp, detail);
         break;
-      
+
       case 4:
         x.price = atof(detail);
         break;
@@ -247,17 +247,17 @@ void displayInven(){
   }
 
   fclose(fpointer);
-  
+
   printf("==========INVENTORY LIST==========\n");
   display(&head);
-    
-    return;  
+
+    return;
 }
 
 void choice(){
-	
+
 	char choice;
-	
+
 	printf("\n[1]Search again\n");
     printf("[2]Return Main Menu: \n");
     printf("Enter: ");
@@ -272,7 +272,7 @@ void choice(){
         {
             return;
         }
-	
+
 }
 
 void search(){
@@ -284,15 +284,15 @@ void search(){
   int s = 0;
   char a[50];
   item x;
-  
-  
+
+
   while (num == 0){
 
 
   	printf("\n\nPlease input Item ID to Search: ");
-  	scanf (" %s", id);    	  	
-  	
-  	
+  	scanf (" %s", id);
+
+
   	for (c=0; c<5 ; c++){
  	if ( id[c] >= 'a' && id[c] <= 'z' ){
  		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
@@ -300,38 +300,38 @@ void search(){
     return;
 		c = 6;
 	   }
-  	
+
   	if ( sscanf(id, " %d", &num) != 1){
   		num = 0;
   		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
   		choice();
       return;
 	   }
-	  
+
   	if (num < 1 || num > 99999 ){
   	 	num = 0;
   	 	printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
   	 	choice();
        return;
 	   }
- 	  
- 	
-   } 
- 
+
+
+   }
+
   }
-  
+
 
   //File pointer
   FILE *fpointer = fopen("Inventory.csv", "r+");
   //line variable for reading line
   char line[255];
-  
+
   char detail[50];
   int i = 0, pos = -1, entries=0;
   char confirm = 'x';
   //check for how many entries in the file
   while(!feof(fpointer)){
-    fgets(line, 255, fpointer); 
+    fgets(line, 255, fpointer);
 
     strcpy(detail, line);
     i=0;
@@ -339,9 +339,9 @@ void search(){
    char * token = strtok(detail, ",\"");
    // loop through the string to extract all other tokens
    while( token != NULL ) {
-      
+
       strcpy(detail, token);
-     
+
       token = strtok(NULL, ",\"");
       switch (i)
       {
@@ -351,21 +351,21 @@ void search(){
         {
           pos=entries;
         }
-        
+
         break;
-      
+
       case 1:
         strcpy(x.description, detail);
         break;
-      
+
       case 2:
         x.qty = atoi(detail);
         break;
-      
+
       case 3:
         strcpy(x.exp, detail);
         break;
-      
+
       case 4:
         x.price = atof(detail);
         break;
@@ -387,14 +387,14 @@ void search(){
 
 
   }
-  
-  
+
+
    deleteList(&head);
-   
+
 
    choice();
 
- 
+
 
 }
 
@@ -410,13 +410,13 @@ void delete(){
   FILE *fpointer = fopen("Inventory.csv", "r+");
   //line variable for reading line
   char line[255] = "";
-  
+
   char detail[50];
   int i = 0, pos = -1, entries=0;
   char confirm = 'x';
   //check for how many entries in the file
   while(!feof(fpointer)){
-    fgets(line, 255, fpointer); 
+    fgets(line, 255, fpointer);
 
     strcpy(detail, line);
 
@@ -427,9 +427,9 @@ void delete(){
    char * token = strtok(detail, ",\"");
    // loop through the string to extract all other tokens
    while( token != NULL ) {
-      
+
       strcpy(detail, token);
-     
+
       token = strtok(NULL, ",\"");
       switch (i)
       {
@@ -439,21 +439,21 @@ void delete(){
         {
           pos=entries;
         }
-        
+
         break;
-      
+
       case 1:
         strcpy(x.description, detail);
         break;
-      
+
       case 2:
         x.qty = atoi(detail);
         break;
-      
+
       case 3:
         strcpy(x.exp, detail);
         break;
-      
+
       case 4:
         x.price = atof(detail);
         break;
@@ -473,7 +473,25 @@ void delete(){
 
   fclose(fpointer);
 
-  if(pos == -1) printf("\nITEM NOT FOUND! RETURNING TO MAIN MENU\n");
+  if(pos == -1) {
+        printf("\nITEM NOT FOUND!\n\n");
+        printf("\n[E] Enter Another ID:? \n");
+        printf("\n[R] Return Main Menu:? \n");
+        printf("\nEnter: \n");
+        scanf(" %c", &confirm);
+
+        while ((confirm!='e' && confirm!='r') || (confirm=='e' && confirm=='r'));
+            if(confirm=='e'||confirm=='E')
+            {
+                delete();
+                return;
+            }
+            if(confirm=='r'||confirm=='R')
+            {
+                return;
+            }
+  }
+
   else{
     showItem(&head, pos);
 
@@ -482,11 +500,27 @@ void delete(){
       printf("\nARE YOU SURE YOU WANT TO DELETE THIS ITEM (y/n)? ");
       scanf(" %c", &confirm);
     } while ((confirm!='y' && confirm!='n') || (confirm=='y' && confirm=='n'));
-    
-    if(confirm=='y'){
+
+    if(confirm=='y'||confirm=='Y'){
       deleteItem(&head, toDelete);
     }
-
+    if(confirm=='n'||confirm=='N'){
+        do{
+        printf("\n[E] Enter Another ID: ");
+        printf("\n\n[R] Return to Main Menu: ");
+        printf("\nEnter: ");
+        scanf(" %c", &confirm);
+        } while ((confirm!='e' && confirm!='r') || (confirm=='e' && confirm=='r'));
+    if(confirm=='e'||confirm=='E')
+    {
+        delete();
+        return;
+    }
+    if(confirm=='r'||confirm=='R')
+    {
+        return;
+    }
+  }
   }
 
   deleteList(&head);
