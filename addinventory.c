@@ -111,7 +111,7 @@ void add()
 	if((x > 9999 && x < 100000 && R > 0 && price > 0) && ((month < 13 or month == '-') && (date <32) && (year < 3000 or year > 2000)) && ((month < 13) && (date <32  or date == '-') && (year < 3000 or year > 2000)) && ((month < 13) && (date <32) && (year < 3000 or year == '-' or year > 2000 )))
 		{	
 					fp = fopen("Inventory.csv", "a+");
-					fprintf(fp, "\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"\n", id, description, R, y, m, d, price);
+					fprintf(fp, "\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"", id, description, R, y, m, d, price);
    					printf("............ \n"); 
  					printf("............ \n"); 
    	 				printf("Success! Inventory Item added! \n" );
