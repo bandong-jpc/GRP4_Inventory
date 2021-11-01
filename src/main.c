@@ -10,6 +10,7 @@ void displayInven();
 void choice();
 void search();
 void delete();
+void delChoice();
 
 int main()
 {
@@ -475,21 +476,8 @@ void delete(){
 
   if(pos == -1) {
         printf("\nITEM NOT FOUND!\n\n");
-        printf("\n[E] Enter Another ID:? \n");
-        printf("\n[R] Return Main Menu:? \n");
-        printf("\nEnter: \n");
-        scanf(" %c", &confirm);
-
-        while ((confirm!='e' && confirm!='r') || (confirm=='e' && confirm=='r'));
-            if(confirm=='e'||confirm=='E')
-            {
-                delete();
-                return;
-            }
-            if(confirm=='r'||confirm=='R')
-            {
-                return;
-            }
+        delChoice();
+        return;
   }
 
   else{
@@ -503,41 +491,35 @@ void delete(){
 
     if(confirm=='y'||confirm=='Y'){
       deleteItem(&head, toDelete);
-      char select;
-      printf("\n[D] Delete Another Item?:");
-      printf("\n\n[R] Return Main Menu ?:");
-      printf("\n\nEnter: ");
-      scanf(" %c", &select);
-
-      while ((select!='d' && select!='r') || (select=='d' && select=='r'));
-        if(select=='d'||select=='D')
-      {
-          delete();
-          return;
-      }
-      if(select=='r'||select=='R')
-      {
-          return;
-      }
+      delChoice();
+      return;
     }
     if(confirm=='n'||confirm=='N'){
-        do{
-        printf("\n[E] Enter Another ID: ");
-        printf("\n\n[R] Return to Main Menu: ");
-        printf("\nEnter: ");
-        scanf(" %c", &confirm);
-        } while ((confirm!='e' && confirm!='r') || (confirm=='e' && confirm=='r'));
-    if(confirm=='e'||confirm=='E')
-    {
-        delete();
-        return;
-    }
-    if(confirm=='r'||confirm=='R')
-    {
+    	delChoice();
         return;
     }
   }
-  }
+  
 
   deleteList(&head);
+}
+void delChoice(){
+
+	char choice;
+
+	printf("\n[1]Input again\n");
+    printf("[2]Return Main Menu: \n");
+    printf("Enter: ");
+    fflush(stdin);
+    scanf(" %d",&choice);
+        if(choice == 1 )
+	      {
+	       delete();
+         return;
+		    }
+        if(choice == 2)
+        {
+            return;
+        }
+	
 }
