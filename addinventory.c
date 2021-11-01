@@ -15,9 +15,9 @@ void add()
 		char exp[10];            //Item Expiry Date
     	float price;             //Item price
     	int x;				     //Char converter to Int
-    	char y[4];                   //Format Year
-    	char m[2];                   //Format Month
-    	char d[2];                   //Format Date
+    	char y[5];                   //Format Year
+    	char m[3];                   //Format Month
+    	char d[3];                   //Format Date
     	int year;
     	int month;
     	int date;
@@ -36,7 +36,7 @@ void add()
     printf("\n");
     fflush(stdin);
     printf("Input Item Description:");
-    scanf(" %41s", &description);
+    scanf(" %[^\n]s", description);
     printf("\n");
     fflush(stdin);
     printf("Input Item Quantity:");
@@ -45,13 +45,13 @@ void add()
     fflush(stdin);
     printf("Input Item Expiry Date in YYYY-MM-DD\n");
     printf("Year: ");
-    scanf(" %s", &y);
+    scanf(" %s", y);
     fflush(stdin);
     printf("Month: ");
-    scanf(" %s", &m);
+    scanf(" %s", m);
     fflush(stdin);
     printf("Date: ");
-    scanf(" %s", &d);
+    scanf(" %s", d);
 	printf("\n");
     fflush(stdin);
     printf("Input Item Price:");
@@ -62,7 +62,7 @@ void add()
 	year = atoi(y);
 	month = atoi(m);
 	date = atoi(d);
-	
+
 	char line[bufferLength];
 	fp = fopen("Inventory.csv", "r");
 		while(fgets(line, bufferLength, fp))
