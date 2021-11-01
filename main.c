@@ -103,7 +103,7 @@ void update(){
       {
       case 0:
         strcpy(x.id, detail);
-        if (strcmp(detail, toUpdate) == 0)
+        if (strcmp(detail, toUpdate) == 0 && pos == -1)
         {
           pos=entries;
         }
