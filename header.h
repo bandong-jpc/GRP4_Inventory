@@ -13,7 +13,7 @@ struct Node{
 
 void saveToFile(struct Node** head_ref){
   struct Node *last = *head_ref;  /* used in step 5*/
-  FILE *fpointer = fopen("Inventory.csv", "r+");
+  FILE *fpointer = fopen("Inventory.csv", "w");
 
     if (*head_ref == NULL)
     {
@@ -21,22 +21,31 @@ void saveToFile(struct Node** head_ref){
        return;
     } 
       
-    while (last->next != NULL){
-      fprintf(fpointer, "\"%s\",\"%s\",\"%d\",\"%s\",\"%.2f\"\n", 
+    while (1){
+      fprintf(fpointer, "\"%s\",\"%s\",\"%d\",\"%s\",\"%.2f\"", 
         last->data.id,
         last->data.description,
         last->data.qty,
         last->data.exp,
         last->data.price
       );
-      last = last->next;
+      
+      if(last->next != NULL) {
+        last = last->next;
+        fprintf(fpointer, "\n");
+      }
+      else {
+        break;
+      }
+      
     }
 
     fclose(fpointer);
 }
 
 void append(struct Node** head_ref, char* id, char* desc, unsigned int qty, char* exp, float price )
-{
+{   
+    
     /* 1. allocate node */
     struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
  
@@ -186,10 +195,10 @@ void updateItem(struct Node** head_ref, int pos){
 
           break;
         }else{
-          printf("\nONE INPUT IS INVALID! PLEASE TRY AGAIN\n");
+          printf("\nAN INPUT IS INVALID! PLEASE TRY AGAIN\n");
         }
       }else{
-        printf("\nONE INPUT IS INVALID! PLEASE TRY AGAIN\n");
+        printf("\nAN INPUT IS INVALID! PLEASE TRY AGAIN\n");
       }
       
 
