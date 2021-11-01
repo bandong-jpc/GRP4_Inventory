@@ -239,14 +239,19 @@ void deleteItem(struct Node** head_ref, char *id ){
       temp = temp->next;
     }
 
-    //search for the node before node to be deleted
-    while (last->next != temp){
-      last = last->next;
+    //if temp is the first item in the list, point head to temp->next
+    if(temp == last){
+      *head_ref = temp->next;
+    }else{
+      //search for the node before node to be deleted
+      while (last->next != temp){
+        last = last->next;
+      }
+
+      //point node before node to be deleted to the next node after the node to be deleted
+      last->next = temp->next;
     }
-
-    //point node before node to be deleted to the next node after the node to be deleted
-    last->next = temp->next;
-
+    
     saveToFile(head_ref);
 
     printf("\n\n===============ITEM DELETED================\n");
@@ -259,20 +264,5 @@ void deleteItem(struct Node** head_ref, char *id ){
 
     /* display(head_ref); */
     free(temp);
-    char select;
-    printf("\n[D] Delete Another Item?:");
-    printf("\n\n[R] Return Main Menu ?:");
-    printf("\n\nEnter: ");
-    scanf(" %c", &select);
-
-     while ((select!='d' && select!='r') || (select=='d' && select=='r'));
-      if(select=='d'||select=='D')
-    {
-        delete();
-        return;
-    }
-    if(select=='r'||select=='R')
-    {
-        return;
-    }
+    
 }

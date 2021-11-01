@@ -503,6 +503,22 @@ void delete(){
 
     if(confirm=='y'||confirm=='Y'){
       deleteItem(&head, toDelete);
+      char select;
+      printf("\n[D] Delete Another Item?:");
+      printf("\n\n[R] Return Main Menu ?:");
+      printf("\n\nEnter: ");
+      scanf(" %c", &select);
+
+      while ((select!='d' && select!='r') || (select=='d' && select=='r'));
+        if(select=='d'||select=='D')
+      {
+          delete();
+          return;
+      }
+      if(select=='r'||select=='R')
+      {
+          return;
+      }
     }
     if(confirm=='n'||confirm=='N'){
         do{
