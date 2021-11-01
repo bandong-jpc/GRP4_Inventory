@@ -223,7 +223,7 @@ void display(struct Node** head_ref){
       printf("Description: %s\n", last->data.description);
       printf("Quantity: %d\n", last->data.qty);
       printf("Expiry Date: %s\n", last->data.exp);
-      printf("Price: 2%f\n", last->data.price);
+      printf("Price: %5.2f\n", last->data.price);
       printf("=========================================\n");
       last = last->next;
     }
