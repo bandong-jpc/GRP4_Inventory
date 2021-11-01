@@ -8,6 +8,8 @@
 void filecheck();
 void update();
 void displayInven();
+void choice();
+void search();
 
 int main()
 {
@@ -262,14 +264,15 @@ void choice(){
     printf("[2]Return Main Menu: \n");
     printf("Enter: ");
     fflush(stdin);
-    scanf("%d",&choice);
+    scanf(" %d",&choice);
         if(choice == 1 )
-	    {
+	      {
 	       search();
-		}
+         return;
+		    }
         if(choice == 2)
         {
-            int main ();
+            return;
         }
 	
 }
@@ -290,26 +293,29 @@ void search(){
 
 
   	printf("\n\nPlease input Item ID to Search: ");
-  	scanf ("%s", id);    	  	
+  	scanf (" %s", id);    	  	
   	
   	
   	for (c=0; c<5 ; c++){
  	if ( id[c] >= 'a' && id[c] <= 'z' ){
  		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
 		choice();
+    return;
 		c = 6;
 	   }
   	
-  	if ( sscanf(id, "%d", &num) != 1){
+  	if ( sscanf(id, " %d", &num) != 1){
   		num = 0;
   		printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
   		choice();
+      return;
 	   }
 	  
   	if (num < 1 || num > 99999 ){
   	 	num = 0;
   	 	printf("\nSorry, the Item ID you entered is not valid.\nPlease try another one.\n\n");
   	 	choice();
+       return;
 	   }
  	  
  	
