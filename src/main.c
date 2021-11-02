@@ -200,6 +200,10 @@ void displayInven(){
     fgets(line, 255, fpointer);
 
     strcpy(detail, line);
+
+    if(strlen(detail) <= 10) continue; //check if line is empty
+    if(strlen(detail) <= 10 && feof(fpointer)) break;
+
     i=0;
    // Extract the first token
    char * token = strtok(detail, ",\"");
@@ -240,10 +244,14 @@ void displayInven(){
       default:
         break;
       }
+
+      if(i==4){
+        append(&head, x.id, x.description, x.qty, x.exp, x.price);
+        i=0;
+        break;
+      }
       i++;
    }
-
-    append(&head, x.id, x.description, x.qty, x.exp, x.price);
     entries++;
   }
 
