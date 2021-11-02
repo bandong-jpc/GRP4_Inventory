@@ -26,10 +26,10 @@ Allows users to delete specific inventory items by inputting the item ID.
 
 # Known Limitations/Defects
 
-**Expiration date month's limit is not set** [GRP4_Bug Reports.xlsx, Bug #23]
+1. **Expiration date month's limit is not set** [GRP4_Bug Reports.xlsx, Bug #23]
 
 Adding Expiration date> It cannot filter the month's specific number of dates. For it still accepts the date 31 for the month of February (2), April(4), June(6), September(9), November(11).
 
-**Trailing empty lines read** [GRP4_Bug Reports.xlsx, Bug #19]
+2. **Trailing empty lines read** [GRP4_Bug Reports.xlsx, Bug #19]
 
 System will read into an empty line at the end of the inventory list if there is one and will copy values of the last line into it after update
