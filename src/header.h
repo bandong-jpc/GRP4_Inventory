@@ -11,6 +11,8 @@ struct Node{
   struct Node *next;
 };
 
+
+
 void saveToFile(struct Node** head_ref){
   struct Node *last = *head_ref;  /* used in step 5*/
   FILE *fpointer = fopen("Inventory.csv", "w");
@@ -76,6 +78,10 @@ void append(struct Node** head_ref, char* id, char* desc, unsigned int qty, char
     /* 6. Change the next of last node */
     last->next = new_node;
     return;
+}
+
+void insert(struct Node** head_ref, char* id, char* desc, unsigned int qty, char* exp, float price){
+  
 }
 
 /* Function to delete the entire linked list */
@@ -265,4 +271,70 @@ void deleteItem(struct Node** head_ref, char *id ){
     /* display(head_ref); */
     free(temp);
     
+}
+
+//function for readting from file
+void readFromFile(struct Node** head_ref){
+  item x;
+
+  FILE *fpointer = fopen("Inventory.csv", "r+");
+  //line variable for reading line
+  char line[255] = "";
+
+  char detail[50];
+  int i = 0, pos = -1, entries=0;
+  char confirm = 'x';
+  //check for how many entries in the file
+  while(!feof(fpointer)){
+    fgets(line, 255, fpointer);
+
+    strcpy(detail, line);
+
+    if(strlen(detail) <= 10) continue; //check if line is empty
+    if(strlen(detail) <= 10 && feof(fpointer)) break;
+    i=0;
+   // Extract the first token
+   char * token = strtok(detail, ",\"");
+   // loop through the string to extract all other tokens
+   while( token != NULL ) {
+
+      strcpy(detail, token);
+
+      token = strtok(NULL, ",\"");
+      switch (i)
+      {
+      case 0:
+        strcpy(x.id, detail);
+        break;
+
+      case 1:
+        strcpy(x.description, detail);
+        break;
+
+      case 2:
+        x.qty = atoi(detail);
+        break;
+
+      case 3:
+        strcpy(x.exp, detail);
+        break;
+
+      case 4:
+        x.price = atof(detail);
+        break;
+      default:
+        break;
+      }
+      if(i==4){
+        append(head_ref, x.id, x.description, x.qty, x.exp, x.price);
+        i=0;
+        break;
+      }
+      i++;
+   }
+
+    entries++;
+  }
+
+  fclose(fpointer);
 }

@@ -85,7 +85,12 @@ void add()
     (x > 9999 && x < 100000 && R > 0 && price > 0) &&
     ((month < 13 || month == '-') && (date <32) && (year < 3000 || year > 2000)) && 
     ((month < 13) && (date <32  || date == '-') && (year < 3000 || year > 2000)) && 
-    ((month < 13) && (date <32) && (year < 3000 || year == '-' || year > 2000 )))
+    ((month < 13) && (date <32) && (year < 3000 || year == '-' || year > 2000 )) &&
+		(((month == 4 || month == 6 || month == 9 || month == 11) && date < 31) || 
+		((month == 2 && year % 4 != 0 && date < 29 ) ||
+		(month == 2 && year % 4 == 0 && date < 30 )))
+		
+		) 
 		{	
 					fp = fopen("Inventory.csv", "a+");
 					fprintf(fp, "\n\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"", id, description, R, y, m, d, price);
