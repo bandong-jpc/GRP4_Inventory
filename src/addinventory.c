@@ -6,6 +6,10 @@
 void add()
 	
 {
+	item it;
+	struct Node* head = NULL;
+
+	readFromFile(&head);
 
 		FILE *fp;
      	fp = fopen("Inventory.csv", "a+");
@@ -81,26 +85,37 @@ void add()
 	}
 	else
 	{
-	if(
+		if((((month == 4 || month == 6 || month == 9 || month == 11) && date > 30) || 
+		((month == 2 && year % 4 != 0 && date > 28 ) ||
+		(month == 2 && year % 4 == 0 && date > 29 )))) printf("Error! Invalid Date! Item not added. \n");
+		else if(
     (x > 9999 && x < 100000 && R > 0 && price > 0) &&
     ((month < 13 || month == '-') && (date <32) && (year < 3000 || year > 2000)) && 
     ((month < 13) && (date <32  || date == '-') && (year < 3000 || year > 2000)) && 
-    ((month < 13) && (date <32) && (year < 3000 || year == '-' || year > 2000 )))
+    ((month < 13) && (date <32) && (year < 3000 || year == '-' || year > 2000 )) 
+		) 
 		{	
-					fp = fopen("Inventory.csv", "a+");
-					fprintf(fp, "\n\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"", id, description, R, y, m, d, price);
-   					printf("............ \n"); 
- 					printf("............ \n"); 
-   	 				printf("Success! Inventory Item added! \n" );
-    
-    				fclose(fp);	
+			char exp[11];
+			sprintf(exp, "%s-%s-%s", y, m, d);
+			
+			strcpy(it.id, id);
+      strcpy(it.description, description);
+      it.qty = R;
+      strcpy(it.exp, exp);
+      it.price = price;
+
+			insert(&head, it.id, it.description, it.qty, it.exp, it.price);
+			printf("............ \n"); 
+ 			printf("............ \n"); 
+   	 	printf("Success! Inventory Item added! \n" );
+					
 		}
 	else
 		{	
-					printf("Error! Invalid Input! Item not added. \n");
+					
 		}		
 	}
 
-	
+	deleteList(&head);
 	return;
 }

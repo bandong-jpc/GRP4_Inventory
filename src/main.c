@@ -67,6 +67,8 @@ int main()
   return 0;
 }
 
+
+
 void update(){
   char toUpdate[6];
   struct Node* head = NULL;
@@ -511,6 +513,7 @@ void delete(){
 
   deleteList(&head);
 }
+
 void delChoice(){
 
 	char choice;
