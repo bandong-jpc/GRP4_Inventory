@@ -100,7 +100,7 @@ void add()
 			
 			strcpy(it.id, id);
       strcpy(it.description, description);
-      it.qty = qty;
+      it.qty = R;
       strcpy(it.exp, exp);
       it.price = price;
 

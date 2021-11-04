@@ -203,6 +203,9 @@ void updateItem(struct Node** head_ref, int pos){
   int i = 0, year, month, day, quan;
   float pr;
 
+  char y[5];                   //Format Year
+  char m[3];                   //Format Month
+  char d[3];                   //Format Date
   char description[41];   //Item Description
   char qty[5];            //Item Quantity
   char exp[11];           //Item Expiry Date
@@ -224,13 +227,29 @@ void updateItem(struct Node** head_ref, int pos){
       scanf(" %[^\n]s", description);
       printf("\nITEM QUANTITY: ");
       scanf(" %s", qty);
-      printf("\nITEM EXPIRATION DATE: ");
-      scanf(" %s", exp);
+      printf("Input Item Expiry Date in YYYY-MM-DD\n");
+      printf("Year: ");
+      scanf(" %s", y);
+      fflush(stdin);
+      printf("Month: ");
+      scanf(" %s", m);
+      fflush(stdin);
+      printf("Date: ");
+      scanf(" %s", d);
       printf("\nITEM PRICE:  ");
       scanf(" %s", price);
 
-      if (
-        (sscanf(exp, "%4d-%2d-%2d", &year, &month, &day) == 3 || strcmp("-", exp) == 0) &&
+      year = atoi(y);
+      month = atoi(m);
+      day = atoi(d);
+
+      if((((month == 4 || month == 6 || month == 9 || month == 11) && day > 30) || 
+      ((month == 2 && year % 4 != 0 && day > 28 ) ||
+      (month == 2 && year % 4 == 0 && day > 29 )))) printf("Error! Invalid Date! Item not added. \n");
+      else if (
+        ((month < 13 || month == '-') && (day <32) && (year < 3000 || year > 2000)) && 
+        ((month < 13) && (day <32  || day == '-') && (year < 3000 || year > 2000)) && 
+        ((month < 13) && (day <32) && (year < 3000 || year == '-' || year > 2000 ))  &&
         (sscanf(qty, "%d", &quan) == 1) &&
         (sscanf(price, "%f", &pr) == 1)
       )
@@ -240,6 +259,8 @@ void updateItem(struct Node** head_ref, int pos){
           last->data.qty = quan;
           strcpy(last->data.exp, exp);
           last->data.price = pr;
+          sprintf(exp, "%s-%s-%s", y, m, d);
+          strcpy(last->data.exp, exp);
 
           saveToFile(head_ref);
 
