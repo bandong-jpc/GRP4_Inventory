@@ -81,7 +81,53 @@ void append(struct Node** head_ref, char* id, char* desc, unsigned int qty, char
 }
 
 void insert(struct Node** head_ref, char* id, char* desc, unsigned int qty, char* exp, float price){
-  
+  /* 1. allocate node */
+
+    struct Node* new_node = (struct Node*) malloc(sizeof(struct Node));
+
+    struct Node *last = *head_ref;  
+    struct Node *toMove = *head_ref;  
+
+    /* 2. put in the data  */
+    strcpy(new_node->data.id, id);
+    strcpy(new_node->data.description, desc);
+    new_node->data.qty = qty;
+    strcpy(new_node->data.exp, exp);
+    new_node->data.price = price;
+    new_node->next = NULL;
+    if (*head_ref == NULL)
+    {
+       *head_ref = new_node;
+       saveToFile(head_ref);
+       return;
+    }
+
+    /* 5. Else traverse till the last node */
+    while (last->next != NULL && atoi(last->data.id) < atoi(new_node->data.id)){
+      last = last->next;
+    }
+
+    if(last->next == NULL){
+      new_node->next = last->next;
+      last->next = new_node;
+    }else{
+      if(toMove == last){
+        new_node->next = toMove;
+        *head_ref = new_node;
+      }else{
+      while (toMove->next != last)
+      {
+        toMove = toMove->next;
+      }
+      new_node->next = toMove->next;
+      toMove->next = new_node;
+      }
+      
+      
+    }
+
+  saveToFile(head_ref);
+
 }
 
 /* Function to delete the entire linked list */
