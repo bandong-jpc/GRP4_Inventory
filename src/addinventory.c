@@ -7,6 +7,10 @@ void add()
 	
 {
 
+	struct Node* head = NULL;
+
+	readFromFile(&head);
+
 		FILE *fp;
      	fp = fopen("Inventory.csv", "a+");
      	char id[6];              //Item ID
@@ -92,13 +96,18 @@ void add()
 		
 		) 
 		{	
-					fp = fopen("Inventory.csv", "a+");
+			char exp[11];
+			sprintf(exp, "%i-%i-%i", &year, &month, &date);
+			printf("%s", exp);
+				/* insert(&head, id, description, qty, ) */
+			
+					/* fp = fopen("Inventory.csv", "a+");
 					fprintf(fp, "\n\"%s\",\"%s\",\"%d\",\"%s-%s-%s\",\"%5.2f\"", id, description, R, y, m, d, price);
    					printf("............ \n"); 
  					printf("............ \n"); 
    	 				printf("Success! Inventory Item added! \n" );
     
-    				fclose(fp);	
+    				fclose(fp);	 */
 		}
 	else
 		{	
@@ -106,6 +115,6 @@ void add()
 		}		
 	}
 
-	
+	deleteList(&head);
 	return;
 }
